@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#141332">
+  <meta name="description" content="超级 SIM：信任防线。抓取线索、分流信号，守住三波虚构安全事件。">
+  <title>超级 SIM：信任防线</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./game.js" defer></script>
+</head>
+<body>
+  <div class="game-shell">
+    <header class="topbar">
+      <div class="wordmark"><span class="mark" aria-hidden="true">◈</span><span>超级 SIM <small>×</small> 信任防线</span></div>
+      <div class="topbar-right"><span>ARCADE / 03 WAVES</span><button id="soundBtn" class="sound-btn" type="button" aria-label="开启音效">♪ <span>OFF</span></button></div>
+    </header>
+
+    <main class="cabinet">
+      <div class="marquee"><span>● LIVE SIGNAL</span><span>TRUST DEFENSE</span><span>● LIVE SIGNAL</span></div>
+      <div class="play-area">
+        <div class="hud" aria-live="polite">
+          <div class="hud-cell"><small>WAVE / 波次</small><strong id="waveText">01 <em>/ 03</em></strong></div>
+          <div class="hud-cell"><small>TIME / 倒计时</small><strong id="timeText">02:30</strong></div>
+          <div class="hud-cell"><small>SCORE / 得分</small><strong id="scoreText">0000</strong></div>
+          <div class="hud-cell heart-cell"><small>CORE / 信任值</small><strong id="trustText">◆ ◆ ◆</strong></div>
+        </div>
+
+        <div class="stage">
+        <section class="board" aria-label="信号轨道">
+          <div class="board-grid" aria-hidden="true"></div>
+          <div class="board-header"><span>信号正在接近核心</span><span id="handledText">0 / 7 已处理</span></div>
+          <div class="lane" data-lane="sms"><div class="lane-name"><span class="lane-symbol">✉</span><span>短信</span></div><div class="lane-track" id="smsTrack"></div></div>
+          <div class="lane" data-lane="call"><div class="lane-name"><span class="lane-symbol">◉</span><span>来电</span></div><div class="lane-track" id="callTrack"></div></div>
+          <div class="lane" data-lane="web"><div class="lane-name"><span class="lane-symbol">▣</span><span>页面</span></div><div class="lane-track" id="webTrack"></div></div>
+          <div class="core-zone"><div class="core-pulse" id="corePulse"><div class="sim-core"><div class="sim-bars"><i></i><i></i><i></i><i></i></div><span>SIM</span></div></div><div class="core-copy"><small>TRUST CORE</small><strong id="coreMessage">等待信号</strong></div></div>
+          <div class="board-bottom"><span id="comboText">COMBO × 0</span><span id="statusText">抓住信号，找出关键证据</span></div>
+        </section>
+
+        <aside class="dispatch" aria-label="信号分流台">
+          <div class="idle-panel" aria-hidden="true"><div class="idle-symbol">◇</div><strong>等待你抓取信号</strong><span>点击轨道上的事件，线索会在这里展开。轨道持续推进。</span></div>
+          <section id="inspectOverlay" class="inspect-overlay hidden" aria-label="信号线索">
+            <div class="inspect-panel">
+              <div class="inspect-top"><div><span class="file-label">抓取信号</span><span id="inspectChannel" class="file-channel">短信</span></div><button id="closeInspect" class="close-btn" type="button" aria-label="收起线索">×</button></div>
+              <div class="inspect-main"><div class="inspect-headline"><span id="inspectTimer">剩余 30 秒</span><span id="inspectPair" class="pair-tag hidden">关联信号</span></div><h2 id="inspectTitle"></h2><p id="inspectSummary"></p><div class="fragment-heading">点开信息，锁定依据 <small id="fragmentCount">0 / 3</small></div><div id="fragments" class="fragments"></div><div id="insight" class="insight">点开一条信息，看看它能否成为判断依据。</div></div>
+              <div class="inspect-bottom"><span>拿不准时，先暂缓核验</span><button id="backToBoard" type="button">收起线索 ↗</button></div>
+            </div>
+          </section>
+
+        <section class="controls" aria-label="分流控制台">
+          <div class="controls-title"><span>送往处置口</span><button id="bufferBtn" class="buffer-btn" type="button" disabled>⏸ 缓冲当前信号 <b id="bufferCount">×2</b></button></div>
+          <div class="gates">
+            <button class="gate gate-block" data-action="block" type="button"><span class="gate-icon">✕</span><strong>阻断</strong><small>明确风险</small><span class="gate-key">1</span></button>
+            <button class="gate gate-verify" data-action="verify" type="button"><span class="gate-icon">◌</span><strong>暂缓核验</strong><small>信息不足</small><span class="gate-key">2</span></button>
+            <button class="gate gate-allow" data-action="allow" type="button"><span class="gate-icon">↗</span><strong>确认继续</strong><small>独立核实</small><span class="gate-key">3</span></button>
+          </div>
+          <div class="control-tip" id="controlTip">缓冲只暂停当前信号 10 秒；其他信号继续推进。</div>
+        </section>
+        </aside>
+        </div>
+
+        <div id="introOverlay" class="overlay intro-overlay" role="dialog" aria-modal="true" aria-labelledby="introTitle">
+          <div class="intro-panel">
+            <div class="intro-mini">SUPER SIM / ARCADE MISSION</div>
+            <div class="intro-illustration" aria-hidden="true"><span class="orbit orbit-a"></span><span class="orbit orbit-b"></span><span class="intro-sim"><i></i><b>SIM</b></span><span class="spark spark-a">✦</span><span class="spark spark-b">✳</span></div>
+            <h1 id="introTitle">信号来了，<br><em>你守得住吗？</em></h1>
+            <p>三波信号冲向核心。抓取事件、查看信息、分流；忙不过来时可缓冲两次。</p>
+            <div class="steps"><span><b>01</b> 抓信号</span><span><b>02</b> 找证据</span><span><b>03</b> 分流</span></div>
+            <button id="startBtn" class="big-button" type="button">开始守护 <span>↗</span></button>
+            <small class="intro-note">约 2–3 分钟 · 虚构情境 · 不采集个人信息</small>
+          </div>
+        </div>
+
+        <div id="toast" class="toast hidden" role="status" aria-live="assertive"></div>
+
+        <div id="resultOverlay" class="overlay result-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+          <div class="result-panel"><span class="result-mini">MISSION COMPLETE</span><h2 id="resultTitle">防线结算</h2><div id="resultScore" class="big-score">0000</div><strong id="resultRank" class="rank"></strong><div class="result-stats"><div><b id="resultCorrect">0 / 7</b><span>正确处置</span></div><div><b id="resultEvidence">0</b><span>关键证据</span></div><div><b id="resultCore">0 / 3</b><span>剩余信任</span></div></div><p id="resultMessage"></p><div class="result-actions"><button id="restartBtn" class="big-button" type="button">再来一局 <span>↗</span></button><button id="copyBtn" class="copy-button" type="button">复制战绩</button></div><small>虚构游戏情境；真实可疑请求请通过已知官方渠道核实。</small></div>
+        </div>
+      </div>
+      <footer class="cabinet-footer"><span>◈  SUPER SIM / TRUST DEFENSE</span><span>一条线索，决定一条防线。</span></footer>
+    </main>
+  </div>
+</body>
+</html>
